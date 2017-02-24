@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www"
+    "start": "yarn && nodemon ./bin/www"
   },
   "dependencies": {
     "async": "^2.1.4",
