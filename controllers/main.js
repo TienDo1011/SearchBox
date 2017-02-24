@@ -22,7 +22,8 @@ exports.dict = function(req, res, next) {
         sendResponse(res, 200, JSON.stringify(word));
       } else {
         console.log('make request call to oald & 1tudien');
-        var url1 = 'http://www.oxfordlearnersdictionaries.com/definition/english/' + wordRequest;
+        var oaldWordRequest = wordRequest.replace(/'/g, '-');
+        var url1 = 'http://www.oxfordlearnersdictionaries.com/definition/english/' + oaldWordRequest;
         var url2 = 'http://dict.laban.vn/find?type=1&query=' + wordRequest;
 
         async.parallel([
