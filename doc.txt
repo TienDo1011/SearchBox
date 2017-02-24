@@ -1,2 +1,0 @@
-https://raw.githubusercontent.com/dwyl/english-words/65362d2b916a4a7466e79c2935e1dba3d1dfbe37/words.txt
-http://www.mieliestronk.com/corncob_lowercase.txt
