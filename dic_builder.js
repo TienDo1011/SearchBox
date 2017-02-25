@@ -6,14 +6,17 @@ var async = require('async');
 var DictData = require('./models/dict-data');
 require('./models/db');
 
+var no = 0;
+var numberOfWordAdded = 0;
+
 fs.readFile('./american-english-test', 'utf8', (err, data) => {
   if (err) throw err;
   var arr = data.split('\n');
   arr.forEach(function(item) {
+    no += 1;
     DictData
       .findOne({word: item})
       .exec(function(err, word) {
-        console.log('======>', !word);
         if(!word) {
           console.log('make request call to oald & 1tudien');
           var oaldWordRequest = item.replace(/'/g, '-');
@@ -42,9 +45,10 @@ fs.readFile('./american-english-test', 'utf8', (err, data) => {
               });
             }
           ], function(err, results) {
-            console.log(results.length);
+            console.log('write Data to dict, item number: ' + [no - 1]);
             if(results[0] !== "" || results[1] !== null) {
-              console.log('write Data to dict');
+              numberOfWordAdded += 1;
+              console.log('numberOfWordAdded:' + [numberOfWordAdded - 1]);
               DictData.create({
                 word: item,
                 oaldData: results[0],
@@ -55,4 +59,5 @@ fs.readFile('./american-english-test', 'utf8', (err, data) => {
         }
       });
     });
+    console.log('done!!!!!');
 });
