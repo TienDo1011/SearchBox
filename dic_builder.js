@@ -46,6 +46,12 @@ fs.readFile('./american-english-test', 'utf8', (err, data) => {
             }
           ], function(err, results) {
             console.log('write Data to dict, item number: ' + [no - 1]);
+            if (no === 101) {
+              fs.writeFile('done.txt', `It's done, sir, number of item read ${no}`, (err) => {
+                if (err) throw err;
+                console.log('It\'s saved!');
+              });
+            }
             if(results[0] !== "" || results[1] !== null) {
               numberOfWordAdded += 1;
               console.log('numberOfWordAdded:' + [numberOfWordAdded - 1]);
@@ -59,5 +65,4 @@ fs.readFile('./american-english-test', 'utf8', (err, data) => {
         }
       });
     });
-    console.log('done!!!!!');
 });
