@@ -2,18 +2,18 @@ var fs = require('fs');
 var request = require('request');
 var cheerio = require('cheerio');
 var mongoose = require('mongoose');
+var async = require('async');
 var DictData = require('./models/dict-data');
+require('./models/db');
 
-fs.readFile('./american-english', 'utf8', (err, data) => {
+fs.readFile('./american-english-test', 'utf8', (err, data) => {
   if (err) throw err;
   var arr = data.split('\n');
-  console.log(arr[0]);
   arr.forEach(function(item) {
     DictData
       .findOne({word: item})
       .exec(function(err, word) {
-        console.log('run here');
-        console.log('looked for word:' + word);
+        console.log('======>', !word);
         if(!word) {
           console.log('make request call to oald & 1tudien');
           var oaldWordRequest = item.replace(/'/g, '-');
@@ -42,7 +42,9 @@ fs.readFile('./american-english', 'utf8', (err, data) => {
               });
             }
           ], function(err, results) {
-            if(results[0] !== "" || results[1] !== "") {
+            console.log(results.length);
+            if(results[0] !== "" || results[1] !== null) {
+              console.log('write Data to dict');
               DictData.create({
                 word: item,
                 oaldData: results[0],
@@ -52,6 +54,5 @@ fs.readFile('./american-english', 'utf8', (err, data) => {
           });
         }
       });
-      console.log('get here');
     });
 });
