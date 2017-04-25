@@ -1,3 +1,38 @@
+// constructs the suggestion engine
+let wordlist = new Bloodhound({
+  datumTokenizer: Bloodhound.tokenizers.whitespace,
+  queryTokenizer: Bloodhound.tokenizers.whitespace,
+  // `states` is an array of state names defined in "The Basics"
+  prefetch: '/american-english.json'
+});
+
+let substringMatcher = function(strs) {
+  return function findMatches(q, cb) {
+    var matches, substringRegex;
+
+    // an array that will be populated with substring matches
+    matches = [];
+
+    // regex used to determine if a string contains the substring `q`
+    substrRegex = new RegExp(q, 'i');
+
+    // iterate through the pool of strings and for any string that
+    // contains the substring `q`, add it to the `matches` array
+    $.each(strs, function(i, str) {
+      if (substrRegex.test(str)) {
+        matches.push(str);
+      }
+    });
+
+    cb(matches);
+  };
+};
+
+$('#s').typeahead(null, {
+  name: 'wordlist',
+  source: wordlist
+});
+
 $(function() {
   $(document).keydown(function(e) {
     if(e.which == 13) {
@@ -6,7 +41,7 @@ $(function() {
       $('#vndic').empty();
       $('#spinning').append('<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i><span class="sr-only">Loading...</span>');
       $.ajax({
-        url: "http://dict.tienganhthaytien.com/dict",
+        url: "http://localhost:3001/dict",
         data: { search: value }
       }).done(function( data ) {
          $('#spinning').empty();

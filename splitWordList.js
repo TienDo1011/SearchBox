@@ -16,3 +16,12 @@ fs.readFile('./american-english', 'utf8', (err, data) => {
     });
   }
 })
+
+// Create JSON array data
+fs.readFile('./american-english', 'utf8', (err, data) => {
+  if (err) throw err;
+  const arr = data.split('\n');
+  fs.writeFile(`./american-english.json`, JSON.stringify(arr), (err) => {
+    if (err) throw err;
+  });
+})
