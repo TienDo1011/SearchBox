@@ -1,9 +1,19 @@
 // constructs the suggestion engine
+// const endpoint = "http://localhost:3001";
+const endpoint = "http://dict.tienganhthaytien.com";
+
 let wordlist = new Bloodhound({
   datumTokenizer: Bloodhound.tokenizers.whitespace,
   queryTokenizer: Bloodhound.tokenizers.whitespace,
   // `states` is an array of state names defined in "The Basics"
-  prefetch: "/no-empty-data.json"
+  prefetch: "/no-empty-data.json",
+  remote: {
+    url: `${endpoint}/q?search=%QUERY`,
+    wildcard: "%QUERY",
+    transform: function(response) {
+      return [response];
+    }
+  }
 });
 
 // let substringMatcher = function(strs) {
@@ -43,7 +53,7 @@ $(function() {
         '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i><span class="sr-only">Loading...</span>'
       );
       $.ajax({
-        url: "http://dict.tienganhthaytien.com/dict",
+        url: `${endpoint}/dict`,
         data: { search: value }
       }).done(function(data) {
         $("#spinning").empty();
