@@ -44,6 +44,7 @@ $("#s").typeahead(null, {
 });
 
 $(function() {
+  $(".tt-input").focus();
   $(document).keydown(function(e) {
     if (e.which == 13) {
       $(".tt-menu").hide();
