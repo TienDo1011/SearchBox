@@ -1,6 +1,6 @@
 // constructs the suggestion engine
-const endpoint = "http://localhost:3001";
-// const endpoint = "http://dict.tienganhthaytien.com";
+// const endpoint = "http://localhost:3001";
+const endpoint = "http://dict.tienganhthaytien.com";
 
 let wordlist = new Bloodhound({
   datumTokenizer: Bloodhound.tokenizers.whitespace,
