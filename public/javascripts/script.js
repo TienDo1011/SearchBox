@@ -46,6 +46,7 @@ $("#s").typeahead(null, {
 $(function() {
   $(document).keydown(function(e) {
     if (e.which == 13) {
+      $(".tt-suggestion:first-child", this).trigger('click');
       var value = $("#s").val().toLowerCase();
       $("#oald").empty();
       $("#vndic").empty();
